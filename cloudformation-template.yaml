@@ -1,4 +1,10 @@
 AWSTemplateFormatVersion: '2010-09-09'
+Parameters:
+  GitHubToken:
+    Type: String
+    NoEcho: true
+    Description: "GitHub OAuth Token"
+
 Resources:
   S3Bucket:
     Type: AWS::S3::Bucket
@@ -24,6 +30,7 @@ Resources:
                 Action:
                   - s3:GetObject
                   - s3:PutObject
+                  - s3:ListBucket
                 Resource: arn:aws:s3:::testing-1999/*
               - Effect: Allow
                 Action:
@@ -90,7 +97,7 @@ Resources:
                 Owner: your-github-username
                 Repo: your-repo-name
                 Branch: main
-                OAuthToken: YOUR_GITHUB_TOKEN
+                OAuthToken: !Ref GitHubToken
         - Name: Build
           Actions:
             - Name: BuildAction
@@ -103,3 +110,8 @@ Resources:
                 - Name: SourceArtifact
               Configuration:
                 ProjectName: my-appconfig-build
+
+Outputs:
+  PipelineName:
+    Description: "Name of the created CodePipeline"
+    Value: !Ref CodePipeline
