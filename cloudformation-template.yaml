@@ -3,7 +3,7 @@ Resources:
   S3Bucket:
     Type: AWS::S3::Bucket
     Properties:
-      BucketName: codepipeline-us-east-1-150568237648
+      BucketName: testing-1999
 
   CodePipelineServiceRole:
     Type: AWS::IAM::Role
@@ -24,7 +24,7 @@ Resources:
                 Action:
                   - s3:GetObject
                   - s3:PutObject
-                Resource: arn:aws:s3:::codepipeline-us-east-1-150568237648/*
+                Resource: arn:aws:s3:::testing-1999/*
               - Effect: Allow
                 Action:
                   - codebuild:StartBuild
@@ -54,7 +54,7 @@ Resources:
               - Effect: Allow
                 Action:
                   - s3:GetObject
-                Resource: arn:aws:s3:::codepipeline-us-east-1-150568237648/*
+                Resource: arn:aws:s3:::testing-1999/*
 
   CodeBuildProject:
     Type: AWS::CodeBuild::Project
@@ -62,7 +62,7 @@ Resources:
       Name: my-appconfig-build
       Source:
         Type: S3
-        Location: codepipeline-us-east-1-150568237648/config.json
+        Location: testing-1999/config.json
       Artifacts:
         Type: NO_ARTIFACTS
       Environment:
